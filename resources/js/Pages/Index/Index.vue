@@ -1,8 +1,6 @@
 <template>
   <MainLayout>
-    <div>Index</div>
-    <Link href="/hello">Show Page</Link>
-    <div>The message is {{ message }}</div>
+    <!--<div>Index</div>-->
   </MainLayout>
 
   <Head title="welcome" />
@@ -10,9 +8,6 @@
 
 <script setup>
 import { Head, Link } from '@inertiajs/vue3'
-defineProps({
-  message: String,
-})
 </script>
 
 <script>

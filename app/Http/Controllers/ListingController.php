@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ListingsRequest;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 
@@ -27,9 +28,20 @@ class ListingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ListingsRequest $request)
     {
-        //
+        Listing::create([
+            'beds' => $request->beds,
+            'baths' => $request->baths,
+            'area' => $request->area,
+            'city' => $request->city,
+            'code' => $request->code,
+            'street' => $request->street,
+            'street_nr' => $request->street_nr,
+            'price' => $request->price,
+        ]);
+
+        return redirect()->route('listing.index')->with('success', 'Listing Created');
     }
 
     /**
@@ -45,15 +57,29 @@ class ListingController extends Controller
      */
     public function edit(Listing $listing)
     {
-        //
+        return inertia('Listing/Edit', ['listing' => $listing]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Listing $listing)
+    public function update(ListingsRequest $request, Listing $listing)
     {
-        //
+        $listing->update(
+            [
+                'beds' => $request->beds,
+                'baths' => $request->baths,
+                'area' => $request->area,
+                'city' => $request->city,
+                'code' => $request->code,
+                'street' => $request->street,
+                'street_nr' => $request->street_nr,
+                'price' => $request->price,
+            ]
+        );
+
+        return redirect()->route('listing.index')
+            ->with('success', 'Listing was changed!');
     }
 
     /**
@@ -61,6 +87,8 @@ class ListingController extends Controller
      */
     public function destroy(Listing $listing)
     {
-        //
+        $listing->delete();
+
+        return redirect()->back()->with('success', 'Listing was changed!');
     }
 }
